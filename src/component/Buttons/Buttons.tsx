@@ -1,7 +1,14 @@
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 
-const Buttons = ({
+interface Props {
+	startWork: boolean;
+	startBreak: boolean;
+	handleWorkButton: () => void;
+	handleBreakButton: () => void;
+}
+
+const Buttons: React.FC<Props> = ({
 	startWork,
 	startBreak,
 	handleWorkButton,
