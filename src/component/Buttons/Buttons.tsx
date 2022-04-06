@@ -3,9 +3,13 @@ import React, { useState } from "react";
 
 const Buttons = () => {
 	const [startWork, setStartWork] = useState(false);
-
+	const [startBreak, setStartBreak] = useState(false);
 	const handleWorkButton = () => {
 		setStartWork(!startWork);
+	};
+
+	const handleBreakButton = () => {
+		setStartBreak(!startBreak);
 	};
 	return (
 		<>
@@ -44,10 +48,20 @@ const Buttons = () => {
 					gap: "10px",
 				}}
 			>
-				<Button variant="contained" color="warning" disabled={false}>
+				<Button
+					variant="contained"
+					color="warning"
+					disabled={startBreak}
+					onClick={handleBreakButton}
+				>
 					Start Break
 				</Button>
-				<Button variant="contained" color="warning" disabled={true}>
+				<Button
+					variant="contained"
+					color="warning"
+					disabled={!startBreak}
+					onClick={handleBreakButton}
+				>
 					End Break
 				</Button>
 			</Box>
