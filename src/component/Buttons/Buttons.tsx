@@ -1,16 +1,12 @@
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 
-const Buttons = () => {
-	const [startWork, setStartWork] = useState(false);
-	const [startBreak, setStartBreak] = useState(false);
-	const handleWorkButton = () => {
-		setStartWork(!startWork);
-	};
-
-	const handleBreakButton = () => {
-		setStartBreak(!startBreak);
-	};
+const Buttons = ({
+	startWork,
+	startBreak,
+	handleWorkButton,
+	handleBreakButton,
+}) => {
 	return (
 		<>
 			<Box
