@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Buttons from "./component/Buttons/Buttons";
 import Navbar from "./component/Navbar/Navbar";
 
-const App = () => {
-	const [startWork, setStartWork] = useState(false);
-	const [startBreak, setStartBreak] = useState(false);
+const App: React.FC = () => {
+	const [startWork, setStartWork] = useState<boolean>(false);
+	const [startBreak, setStartBreak] = useState<boolean>(false);
+
 	const handleWorkButton = () => {
 		setStartWork(!startWork);
 	};
@@ -19,7 +20,7 @@ const App = () => {
 				startWork={startWork}
 				startBreak={startBreak}
 				handleWorkButton={handleWorkButton}
-				handleBreakButton
+				handleBreakButton={handleBreakButton}
 			/>
 		</div>
 	);
