@@ -16,7 +16,7 @@ const ColumnText: React.FC<Props> = ({ title, time }) => {
 				alignItems: "center",
 			}}
 		>
-			<Typography component="div" variant="h6">
+			<Typography component="div" variant="h6" color="success">
 				{title}
 			</Typography>
 			<Typography component="div">{time}</Typography>
