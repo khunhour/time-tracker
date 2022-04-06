@@ -1,7 +1,12 @@
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 const Buttons = () => {
+	const [startWork, setStartWork] = useState(false);
+
+	const handleWorkButton = () => {
+		setStartWork(!startWork);
+	};
 	return (
 		<>
 			<Box
@@ -14,10 +19,20 @@ const Buttons = () => {
 					gap: "10px",
 				}}
 			>
-				<Button variant="contained" color="success" disabled={false}>
+				<Button
+					variant="contained"
+					color="success"
+					disabled={startWork}
+					onClick={handleWorkButton}
+				>
 					Start Work
 				</Button>
-				<Button variant="contained" color="error" disabled={true}>
+				<Button
+					variant="contained"
+					color="error"
+					disabled={!startWork}
+					onClick={handleWorkButton}
+				>
 					End Work
 				</Button>
 			</Box>
