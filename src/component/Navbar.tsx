@@ -5,7 +5,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-const Navbar: React.FC = () => {
+interface Props {
+	handleChangeFormType: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+const Navbar: React.FC<Props> = ({ handleChangeFormType }) => {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -24,12 +28,22 @@ const Navbar: React.FC = () => {
 						<Button color="inherit">Work History</Button>
 					</Box>
 					<Box mx={1}>
-						<Button color="inherit" variant="outlined">
+						<Button
+							color="inherit"
+							variant="outlined"
+							value="login"
+							onClick={handleChangeFormType}
+						>
 							Login
 						</Button>
 					</Box>
 					<Box mx={1}>
-						<Button color="inherit" variant="outlined">
+						<Button
+							color="inherit"
+							variant="outlined"
+							value="signup"
+							onClick={handleChangeFormType}
+						>
 							Sign Up
 						</Button>
 					</Box>

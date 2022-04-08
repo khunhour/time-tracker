@@ -11,6 +11,7 @@ const App: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string>("");
+	const [formType, setFormType] = useState<string>("login");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
@@ -39,6 +40,10 @@ const App: React.FC = () => {
 		}
 	};
 
+	const handleChangeFormType = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setFormType(e.currentTarget.value);
+	};
+
 	const handleWorkButton = () => {
 		setStartWork(!startWork);
 	};
@@ -48,7 +53,7 @@ const App: React.FC = () => {
 	};
 	return (
 		<div>
-			<Navbar />
+			<Navbar handleChangeFormType={handleChangeFormType} />
 			<Buttons
 				startWork={startWork}
 				startBreak={startBreak}
@@ -57,7 +62,7 @@ const App: React.FC = () => {
 			/>
 			{/* <Today /> */}
 			<Form
-				type={"signup"}
+				type={formType}
 				email={email}
 				password={password}
 				error={error}
