@@ -18,6 +18,14 @@ const App: React.FC = () => {
 		}
 	};
 
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log(email, password);
+		console.log(e.currentTarget.id);
+		setEmail("");
+		setPassword("");
+	};
+
 	const handleWorkButton = () => {
 		setStartWork(!startWork);
 	};
@@ -36,11 +44,11 @@ const App: React.FC = () => {
 			/>
 			{/* <Today /> */}
 			<Form
-				type={"Sign In"}
+				type={"login"}
+				email={email}
+				password={password}
 				handleChange={handleChange}
-				action={() => {
-					console.log("login");
-				}}
+				handleSubmit={handleSubmit}
 			/>
 		</div>
 	);

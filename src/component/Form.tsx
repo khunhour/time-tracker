@@ -4,15 +4,30 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import React from "react";
+import React, { FormEvent } from "react";
 
 interface Props {
 	type: string;
+	email: string;
+	password: string;
 	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	action: () => void;
+	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const Form: React.FC<Props> = ({ type, handleChange, action }) => {
+const Form: React.FC<Props> = ({
+	type,
+	email,
+	password,
+	handleChange,
+	handleSubmit,
+}) => {
+	let text: string = "";
+	if (type === "login") {
+		text = "Log In";
+	} else if (type === "signup") {
+		text = "Sign Up";
+	}
+
 	return (
 		<Container component="main" maxWidth="sm">
 			<Paper elevation={5}>
@@ -26,9 +41,9 @@ const Form: React.FC<Props> = ({ type, handleChange, action }) => {
 					}}
 				>
 					<Typography component="h1" variant="h5">
-						{type}
+						{text}
 					</Typography>
-					<Box component="form" onSubmit={action}>
+					<Box component="form" onSubmit={handleSubmit} id={type}>
 						<TextField
 							margin="normal"
 							required
@@ -38,6 +53,7 @@ const Form: React.FC<Props> = ({ type, handleChange, action }) => {
 							label="Email Address"
 							name="email"
 							onChange={handleChange}
+							value={email}
 						/>
 						<TextField
 							margin="normal"
@@ -47,6 +63,7 @@ const Form: React.FC<Props> = ({ type, handleChange, action }) => {
 							label="Password"
 							name="password"
 							onChange={handleChange}
+							value={password}
 						/>
 						<Button
 							type="submit"
@@ -54,7 +71,7 @@ const Form: React.FC<Props> = ({ type, handleChange, action }) => {
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 						>
-							{type}
+							{text}
 						</Button>
 					</Box>
 				</Box>
