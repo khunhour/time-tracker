@@ -8,10 +8,11 @@ import React from "react";
 
 interface Props {
 	type: string;
+	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	action: () => void;
 }
 
-const Form: React.FC<Props> = ({ type, action }) => {
+const Form: React.FC<Props> = ({ type, handleChange, action }) => {
 	return (
 		<Container component="main" maxWidth="sm">
 			<Paper elevation={5}>
@@ -36,6 +37,7 @@ const Form: React.FC<Props> = ({ type, action }) => {
 							id="email"
 							label="Email Address"
 							name="email"
+							onChange={handleChange}
 						/>
 						<TextField
 							margin="normal"
@@ -44,6 +46,7 @@ const Form: React.FC<Props> = ({ type, action }) => {
 							id="password"
 							label="Password"
 							name="password"
+							onChange={handleChange}
 						/>
 						<Button
 							type="submit"
