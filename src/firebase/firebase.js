@@ -18,15 +18,15 @@ const signUp = async (email, password) => {
 	}
 };
 
-// const loginEmailPassword = async (email, password) => {
-// 	try {
-// 		const userCredential = await signInWithEmailAndPassword(
-// 			auth,
-// 			email,
-// 			password
-// 		);
-// 		console.log(userCredential.user);
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// };
+const loginEmailPassword = async (email, password) => {
+	try {
+		const userCredential = await signInWithEmailAndPassword(
+			auth,
+			email,
+			password
+		);
+		console.log(userCredential.user);
+	} catch (error) {
+		console.log(error);
+	}
+};
