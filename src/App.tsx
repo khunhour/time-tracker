@@ -3,6 +3,7 @@ import Buttons from "./component/Buttons";
 import Navbar from "./component/Navbar";
 import Form from "./component/Form";
 import Today from "./component/Today";
+import firebase from "./firebase/firebase";
 
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
@@ -20,8 +21,12 @@ const App: React.FC = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(email, password);
 		console.log(e.currentTarget.id);
+		if (e.currentTarget.id === "login") {
+			firebase.loginEmailPassword(email, password);
+		} else if (e.currentTarget.id === "signup") {
+			firebase.signUp(email, password);
+		}
 		setEmail("");
 		setPassword("");
 	};
@@ -44,7 +49,7 @@ const App: React.FC = () => {
 			/>
 			{/* <Today /> */}
 			<Form
-				type={"login"}
+				type={"signup"}
 				email={email}
 				password={password}
 				handleChange={handleChange}
