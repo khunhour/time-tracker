@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Buttons from "./component/Buttons";
 import Navbar from "./component/Navbar";
-import SignIn from "./component/SignIn";
+import Form from "./component/Form";
 import Today from "./component/Today";
 
 const App: React.FC = () => {
@@ -25,7 +25,12 @@ const App: React.FC = () => {
 				handleBreakButton={handleBreakButton}
 			/>
 			{/* <Today /> */}
-			<SignIn />
+			<Form
+				type={"Sign In"}
+				action={() => {
+					console.log("login");
+				}}
+			/>
 		</div>
 	);
 };

@@ -1,5 +1,9 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const Navbar: React.FC = () => {
 	return (
@@ -22,6 +26,11 @@ const Navbar: React.FC = () => {
 					<Box mx={1}>
 						<Button color="inherit" variant="outlined">
 							Login
+						</Button>
+					</Box>
+					<Box mx={1}>
+						<Button color="inherit" variant="outlined">
+							Sign Up
 						</Button>
 					</Box>
 				</Toolbar>
