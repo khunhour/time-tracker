@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Buttons from "./component/Buttons";
 import Navbar from "./component/Navbar";
+import SignIn from "./component/SignIn";
 import Today from "./component/Today";
 
 const App: React.FC = () => {
@@ -23,7 +24,8 @@ const App: React.FC = () => {
 				handleWorkButton={handleWorkButton}
 				handleBreakButton={handleBreakButton}
 			/>
-			<Today />
+			{/* <Today /> */}
+			<SignIn />
 		</div>
 	);
 };
