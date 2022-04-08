@@ -5,11 +5,13 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import React, { FormEvent } from "react";
+import ErrorMsg from "./ErrorMsg";
 
 interface Props {
 	type: string;
 	email: string;
 	password: string;
+	error: string;
 	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -18,6 +20,7 @@ const Form: React.FC<Props> = ({
 	type,
 	email,
 	password,
+	error,
 	handleChange,
 	handleSubmit,
 }) => {
@@ -65,6 +68,7 @@ const Form: React.FC<Props> = ({
 							onChange={handleChange}
 							value={password}
 						/>
+						<ErrorMsg error={error} />
 						<Button
 							type="submit"
 							fullWidth

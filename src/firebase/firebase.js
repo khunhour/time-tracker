@@ -17,6 +17,7 @@ const signUp = async (email, password) => {
 		console.log(userCredential.user);
 	} catch (error) {
 		console.log(error);
+		return error.message;
 	}
 };
 
@@ -30,6 +31,7 @@ const loginEmailPassword = async (email, password) => {
 		console.log(userCredential.user);
 	} catch (error) {
 		console.log(error);
+		return error.message;
 	}
 };
 

@@ -10,6 +10,7 @@ const App: React.FC = () => {
 	const [startBreak, setStartBreak] = useState<boolean>(false);
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
+	const [error, setError] = useState<string>("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
@@ -19,16 +20,23 @@ const App: React.FC = () => {
 		}
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(e.currentTarget.id);
 		if (e.currentTarget.id === "login") {
 			firebase.loginEmailPassword(email, password);
+			setError("");
+			setEmail("");
+			setPassword("");
 		} else if (e.currentTarget.id === "signup") {
-			firebase.signUp(email, password);
+			let result = await firebase.signUp(email, password);
+			if (result) {
+				setError(result);
+			} else {
+				setError("");
+				setEmail("");
+				setPassword("");
+			}
 		}
-		setEmail("");
-		setPassword("");
 	};
 
 	const handleWorkButton = () => {
@@ -52,6 +60,7 @@ const App: React.FC = () => {
 				type={"signup"}
 				email={email}
 				password={password}
+				error={error}
 				handleChange={handleChange}
 				handleSubmit={handleSubmit}
 			/>
