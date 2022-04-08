@@ -50,3 +50,12 @@ const monitorAuthState = async () => {
 		}
 	});
 };
+
+const firebase = {
+	signUp,
+	loginEmailPassword,
+	logout,
+	monitorAuthState,
+};
+
+export default firebase;
