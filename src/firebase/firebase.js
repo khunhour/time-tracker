@@ -3,6 +3,7 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
+	onAuthStateChanged,
 } from "firebase/auth";
 
 const signUp = async (email, password) => {
@@ -34,4 +35,18 @@ const loginEmailPassword = async (email, password) => {
 
 const logout = async () => {
 	await signOut(auth);
+};
+
+const monitorAuthState = async () => {
+	onAuthStateChanged(auth, (user) => {
+		// login sucessfully
+		if (user) {
+			//show page
+		}
+
+		//login not successful or no user stored
+		else {
+			//show login form
+		}
+	});
 };
