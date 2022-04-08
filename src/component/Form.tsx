@@ -6,7 +6,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import React from "react";
 
-const SignIn = () => {
+interface Props {
+	type: string;
+	action: () => void;
+}
+
+const Form: React.FC<Props> = ({ type, action }) => {
 	return (
 		<Container component="main" maxWidth="sm">
 			<Paper elevation={5}>
@@ -20,9 +25,9 @@ const SignIn = () => {
 					}}
 				>
 					<Typography component="h1" variant="h5">
-						Sign In
+						{type}
 					</Typography>
-					<Box component="form">
+					<Box component="form" onSubmit={action}>
 						<TextField
 							margin="normal"
 							required
@@ -45,7 +50,7 @@ const SignIn = () => {
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 						>
-							Sign Up
+							{type}
 						</Button>
 					</Box>
 				</Box>
@@ -54,4 +59,4 @@ const SignIn = () => {
 	);
 };
 
-export default SignIn;
+export default Form;
