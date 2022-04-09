@@ -4,12 +4,40 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 interface Props {
+	isLoggedIn: boolean;
 	handleChangeFormType: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Navbar: React.FC<Props> = ({ handleChangeFormType }) => {
+const Navbar: React.FC<Props> = ({ isLoggedIn, handleChangeFormType }) => {
+	const NavButtons = isLoggedIn ? (
+		<Stack spacing={2} direction="row">
+			<Button color="inherit">Today</Button>
+			<Button color="inherit">Work History</Button>
+		</Stack>
+	) : (
+		<Stack spacing={2} direction="row">
+			<Button
+				color="inherit"
+				variant="outlined"
+				value="login"
+				onClick={handleChangeFormType}
+			>
+				Login
+			</Button>
+			<Button
+				color="inherit"
+				variant="outlined"
+				value="signup"
+				onClick={handleChangeFormType}
+			>
+				Sign Up
+			</Button>
+		</Stack>
+	);
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -21,32 +49,7 @@ const Navbar: React.FC<Props> = ({ handleChangeFormType }) => {
 					>
 						Time Tracker
 					</Typography>
-					<Box mx={1}>
-						<Button color="inherit">Today</Button>
-					</Box>
-					<Box mx={1}>
-						<Button color="inherit">Work History</Button>
-					</Box>
-					<Box mx={1}>
-						<Button
-							color="inherit"
-							variant="outlined"
-							value="login"
-							onClick={handleChangeFormType}
-						>
-							Login
-						</Button>
-					</Box>
-					<Box mx={1}>
-						<Button
-							color="inherit"
-							variant="outlined"
-							value="signup"
-							onClick={handleChangeFormType}
-						>
-							Sign Up
-						</Button>
-					</Box>
+					{NavButtons}
 				</Toolbar>
 			</AppBar>
 		</Box>

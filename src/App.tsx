@@ -12,6 +12,7 @@ const App: React.FC = () => {
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string>("");
 	const [formType, setFormType] = useState<string>("login");
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
@@ -53,7 +54,10 @@ const App: React.FC = () => {
 	};
 	return (
 		<div>
-			<Navbar handleChangeFormType={handleChangeFormType} />
+			<Navbar
+				isLoggedIn={isLoggedIn}
+				handleChangeFormType={handleChangeFormType}
+			/>
 			<Buttons
 				startWork={startWork}
 				startBreak={startBreak}
