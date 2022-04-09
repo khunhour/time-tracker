@@ -25,22 +25,34 @@ const App: React.FC = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (e.currentTarget.id === "login") {
-			firebase.loginEmailPassword(email, password);
-			setError("");
-			setEmail("");
-			setPassword("");
+			let result = await firebase.loginEmailPassword(email, password);
+			if (result) {
+				setError(result);
+			} else {
+				setIsLoggedIn(true);
+				clearForm();
+			}
 		} else if (e.currentTarget.id === "signup") {
 			let result = await firebase.signUp(email, password);
 			if (result) {
 				setError(result);
 			} else {
-				setError("");
-				setEmail("");
-				setPassword("");
+				setIsLoggedIn(true);
+				clearForm();
 			}
 		}
 	};
 
+	const clearForm = () => {
+		setError("");
+		setEmail("");
+		setPassword("");
+	};
+
+	const handleLogout = () => {
+		firebase.logout();
+		setIsLoggedIn(false);
+	};
 	const handleChangeFormType = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setFormType(e.currentTarget.value);
 	};
@@ -65,14 +77,14 @@ const App: React.FC = () => {
 				handleBreakButton={handleBreakButton}
 			/>
 			{/* <Today /> */}
-			<Form
+			{/* <Form
 				type={formType}
 				email={email}
 				password={password}
 				error={error}
 				handleChange={handleChange}
 				handleSubmit={handleSubmit}
-			/>
+			/> */}
 		</div>
 	);
 };

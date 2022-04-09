@@ -16,6 +16,9 @@ const Navbar: React.FC<Props> = ({ isLoggedIn, handleChangeFormType }) => {
 		<Stack spacing={2} direction="row">
 			<Button color="inherit">Today</Button>
 			<Button color="inherit">Work History</Button>
+			<Button color="inherit" variant="outlined" value="login">
+				Log Out
+			</Button>
 		</Stack>
 	) : (
 		<Stack spacing={2} direction="row">
