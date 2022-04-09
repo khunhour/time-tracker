@@ -4,6 +4,7 @@ import Navbar from "./component/Navbar";
 import Form from "./component/Form";
 import Today from "./component/Today";
 import firebase from "./firebase/firebase";
+import Main from "./component/Main";
 
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
@@ -70,7 +71,7 @@ const App: React.FC = () => {
 				isLoggedIn={isLoggedIn}
 				handleChangeFormType={handleChangeFormType}
 			/>
-			<Buttons
+			<Main
 				startWork={startWork}
 				startBreak={startBreak}
 				handleWorkButton={handleWorkButton}
