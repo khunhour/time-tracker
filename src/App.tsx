@@ -5,6 +5,7 @@ import Form from "./component/Form";
 import Today from "./component/Today";
 import firebase from "./firebase/firebase";
 import Main from "./component/Main";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
@@ -14,6 +15,8 @@ const App: React.FC = () => {
 	const [error, setError] = useState<string>("");
 	const [formType, setFormType] = useState<string>("login");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+	const navigate = useNavigate();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
@@ -55,6 +58,7 @@ const App: React.FC = () => {
 		setIsLoggedIn(false);
 	};
 	const handleChangeFormType = (e: React.MouseEvent<HTMLButtonElement>) => {
+		navigate("/");
 		setFormType(e.currentTarget.value);
 	};
 
@@ -66,7 +70,7 @@ const App: React.FC = () => {
 		setStartBreak(!startBreak);
 	};
 	return (
-		<div>
+		<>
 			<Navbar
 				isLoggedIn={isLoggedIn}
 				handleChangeFormType={handleChangeFormType}
@@ -77,16 +81,23 @@ const App: React.FC = () => {
 				handleWorkButton={handleWorkButton}
 				handleBreakButton={handleBreakButton}
 			/>
-			{/* <Today /> */}
-			{/* <Form
-				type={formType}
-				email={email}
-				password={password}
-				error={error}
-				handleChange={handleChange}
-				handleSubmit={handleSubmit}
-			/> */}
-		</div>
+			<Routes>
+				{/* <Today /> */}
+				<Route
+					path="/"
+					element={
+						<Form
+							type={formType}
+							email={email}
+							password={password}
+							error={error}
+							handleChange={handleChange}
+							handleSubmit={handleSubmit}
+						/>
+					}
+				/>
+			</Routes>
+		</>
 	);
 };
 
