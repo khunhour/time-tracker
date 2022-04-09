@@ -10,9 +10,14 @@ import { Link } from "react-router-dom";
 interface Props {
 	isLoggedIn: boolean;
 	handleChangeFormType: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	handleLogout: () => void;
 }
 
-const Navbar: React.FC<Props> = ({ isLoggedIn, handleChangeFormType }) => {
+const Navbar: React.FC<Props> = ({
+	isLoggedIn,
+	handleChangeFormType,
+	handleLogout,
+}) => {
 	const style = { textDecoration: "none", color: "white" };
 
 	const NavButtons = isLoggedIn ? (
@@ -27,7 +32,7 @@ const Navbar: React.FC<Props> = ({ isLoggedIn, handleChangeFormType }) => {
 					Work History
 				</Link>
 			</Button>
-			<Button color="inherit" variant="outlined" value="login">
+			<Button color="inherit" variant="outlined" onClick={handleLogout}>
 				Log Out
 			</Button>
 		</Stack>

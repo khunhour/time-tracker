@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import Buttons from "./component/Buttons";
+import React, { useEffect, useState } from "react";
 import Navbar from "./component/Navbar";
 import Form from "./component/Form";
-import Today from "./component/Today";
 import firebase from "./firebase/firebase";
-import Main from "./component/Dashboard";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./component/Dashboard";
 import History from "./component/History";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/firebase-config";
 
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
@@ -17,8 +16,25 @@ const App: React.FC = () => {
 	const [error, setError] = useState<string>("");
 	const [formType, setFormType] = useState<string>("login");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
-
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		const monitorAuthState = onAuthStateChanged(auth, (user) => {
+			// login sucessfully
+			if (user) {
+				navigate("/dashboard");
+				setIsLoggedIn(true);
+			}
+			//no user or logged out
+			else {
+				navigate("/");
+				setIsLoggedIn(false);
+			}
+		});
+		return () => {
+			monitorAuthState();
+		};
+	}, [isLoggedIn]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
@@ -35,8 +51,6 @@ const App: React.FC = () => {
 			if (result) {
 				setError(result);
 			} else {
-				setIsLoggedIn(true);
-				navigate("/dashboard");
 				clearForm();
 			}
 		} else if (e.currentTarget.id === "signup") {
@@ -44,8 +58,6 @@ const App: React.FC = () => {
 			if (result) {
 				setError(result);
 			} else {
-				setIsLoggedIn(true);
-				navigate("/dashboard");
 				clearForm();
 			}
 		}
@@ -77,6 +89,7 @@ const App: React.FC = () => {
 		<>
 			<Navbar
 				isLoggedIn={isLoggedIn}
+				handleLogout={handleLogout}
 				handleChangeFormType={handleChangeFormType}
 			/>
 			<Routes>
