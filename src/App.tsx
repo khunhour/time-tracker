@@ -4,8 +4,10 @@ import Navbar from "./component/Navbar";
 import Form from "./component/Form";
 import Today from "./component/Today";
 import firebase from "./firebase/firebase";
-import Main from "./component/Main";
+import Main from "./component/Dashboard";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import Dashboard from "./component/Dashboard";
+import History from "./component/History";
 
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
@@ -14,7 +16,7 @@ const App: React.FC = () => {
 	const [password, setPassword] = useState<string>("");
 	const [error, setError] = useState<string>("");
 	const [formType, setFormType] = useState<string>("login");
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
 	const navigate = useNavigate();
 
@@ -34,6 +36,7 @@ const App: React.FC = () => {
 				setError(result);
 			} else {
 				setIsLoggedIn(true);
+				navigate("/dashboard");
 				clearForm();
 			}
 		} else if (e.currentTarget.id === "signup") {
@@ -42,6 +45,7 @@ const App: React.FC = () => {
 				setError(result);
 			} else {
 				setIsLoggedIn(true);
+				navigate("/dashboard");
 				clearForm();
 			}
 		}
@@ -75,12 +79,6 @@ const App: React.FC = () => {
 				isLoggedIn={isLoggedIn}
 				handleChangeFormType={handleChangeFormType}
 			/>
-			<Main
-				startWork={startWork}
-				startBreak={startBreak}
-				handleWorkButton={handleWorkButton}
-				handleBreakButton={handleBreakButton}
-			/>
 			<Routes>
 				{/* <Today /> */}
 				<Route
@@ -96,6 +94,18 @@ const App: React.FC = () => {
 						/>
 					}
 				/>
+				<Route
+					path="/dashboard"
+					element={
+						<Dashboard
+							startWork={startWork}
+							startBreak={startBreak}
+							handleWorkButton={handleWorkButton}
+							handleBreakButton={handleBreakButton}
+						/>
+					}
+				/>
+				<Route path="/history" element={<History />} />
 			</Routes>
 		</>
 	);

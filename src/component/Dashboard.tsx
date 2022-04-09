@@ -8,7 +8,7 @@ interface Props {
 	handleBreakButton: () => void;
 }
 
-const Main: React.FC<Props> = ({
+const Dashboard: React.FC<Props> = ({
 	startWork,
 	startBreak,
 	handleWorkButton,
@@ -26,4 +26,4 @@ const Main: React.FC<Props> = ({
 	);
 };
 
-export default Main;
+export default Dashboard;

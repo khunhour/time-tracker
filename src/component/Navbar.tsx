@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
 
 interface Props {
 	isLoggedIn: boolean;
@@ -12,10 +13,20 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = ({ isLoggedIn, handleChangeFormType }) => {
+	const style = { textDecoration: "none", color: "white" };
+
 	const NavButtons = isLoggedIn ? (
 		<Stack spacing={2} direction="row">
-			<Button color="inherit">Today</Button>
-			<Button color="inherit">Work History</Button>
+			<Button color="inherit">
+				<Link to="/dashboard" style={style}>
+					Dashboard
+				</Link>
+			</Button>
+			<Button color="inherit">
+				<Link to="/history" style={style}>
+					Work History
+				</Link>
+			</Button>
 			<Button color="inherit" variant="outlined" value="login">
 				Log Out
 			</Button>
