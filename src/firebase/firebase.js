@@ -5,6 +5,7 @@ import {
 	signOut,
 	onAuthStateChanged,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 const signUp = async (email, password) => {
 	try {
@@ -13,7 +14,21 @@ const signUp = async (email, password) => {
 			email,
 			password
 		);
-		//do sth
+		// added user uid from auth to db
+		const userRef = doc(db, "users", userCredential.user.uid);
+		const data = [
+			{
+				workStartTime: "",
+				workEndTime: "",
+				breakStartTime: "",
+				breakEndTime: "",
+				totalWorkTime: "",
+				totalBreakTime: "",
+			},
+		];
+		await setDoc(userRef, {
+			history: data,
+		});
 		console.log(userCredential.user);
 	} catch (error) {
 		console.log(error);
