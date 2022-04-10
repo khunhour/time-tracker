@@ -3,7 +3,6 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
-	onAuthStateChanged,
 } from "firebase/auth";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 
@@ -45,6 +44,7 @@ const logout = async () => {
 	await signOut(auth);
 };
 
+// adding todays data to database
 const addTodayData = async (data) => {
 	const user = auth.currentUser;
 	if (user) {
