@@ -5,7 +5,7 @@ import {
 	signOut,
 	onAuthStateChanged,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 
 const signUp = async (email, password) => {
 	try {
@@ -16,16 +16,7 @@ const signUp = async (email, password) => {
 		);
 		// added user uid from auth to db
 		const userRef = doc(db, "users", userCredential.user.uid);
-		const data = [
-			{
-				workStartTime: "",
-				workEndTime: "",
-				breakStartTime: "",
-				breakEndTime: "",
-				totalWorkTime: "",
-				totalBreakTime: "",
-			},
-		];
+		const data = [];
 		await setDoc(userRef, {
 			history: data,
 		});
@@ -54,25 +45,23 @@ const logout = async () => {
 	await signOut(auth);
 };
 
-const monitorAuthState = async () => {
-	onAuthStateChanged(auth, (user) => {
-		// login sucessfully
-		if (user) {
-			//show page
-		}
-
-		//login not successful or no user stored
-		else {
-			//show login form
-		}
-	});
+const addTodayData = async (data) => {
+	const user = auth.currentUser;
+	if (user) {
+		const userRef = doc(db, "users", user.uid);
+		await updateDoc(userRef, {
+			history: arrayUnion(data),
+		});
+	} else {
+		console.log("No user");
+	}
 };
 
 const firebase = {
 	signUp,
 	loginEmailPassword,
 	logout,
-	monitorAuthState,
+	addTodayData,
 };
 
 export default firebase;
