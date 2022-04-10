@@ -16,6 +16,14 @@ const App: React.FC = () => {
 	const [error, setError] = useState<string>("");
 	const [formType, setFormType] = useState<string>("login");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+	const [todayData, setTodayData] = useState({
+		workStartTime: 0,
+		workEndTime: 0,
+		breakStartTime: 0,
+		breakEndTime: 0,
+		totalWorkTime: 0,
+		totalBreakTime: 0,
+	});
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -79,10 +87,42 @@ const App: React.FC = () => {
 	};
 
 	const handleWorkButton = () => {
+		if (!startWork) {
+			// started work
+			setTodayData((prevData) => ({
+				...prevData,
+				workStartTime: Date.now(),
+			}));
+		} else {
+			// ended work -> update state
+			let total = Date.now() - todayData.workStartTime;
+			setTodayData((prevData) => ({
+				...prevData,
+				workEndTime: Date.now(),
+				totalWorkTime: total,
+			}));
+			// update database
+			firebase.addTodayData(todayData);
+		}
 		setStartWork(!startWork);
 	};
 
 	const handleBreakButton = () => {
+		if (!startBreak) {
+			// started break -> update state
+			setTodayData((prevData) => ({
+				...prevData,
+				breakStartTime: Date.now(),
+			}));
+		} else {
+			// ended break
+			let total = Date.now() - todayData.breakStartTime;
+			setTodayData((prevData) => ({
+				...prevData,
+				breakEndTime: Date.now(),
+				totalBreakTime: total,
+			}));
+		}
 		setStartBreak(!startBreak);
 	};
 	return (
