@@ -44,6 +44,13 @@ const App: React.FC = () => {
 		};
 	}, [isLoggedIn]);
 
+	useEffect(() => {
+		if (todayData.workEndTime) {
+			firebase.addTodayData(todayData);
+			resetUserData();
+		}
+	});
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
 			setEmail(e.target.value);
@@ -86,7 +93,7 @@ const App: React.FC = () => {
 		setFormType(e.currentTarget.value);
 	};
 
-	const handleWorkButton = () => {
+	const handleWorkButton = async () => {
 		if (!startWork) {
 			// started work
 			setTodayData((prevData) => ({
@@ -102,7 +109,6 @@ const App: React.FC = () => {
 				totalWorkTime: total,
 			}));
 			// update database
-			firebase.addTodayData(todayData);
 		}
 		setStartWork(!startWork);
 	};
@@ -124,6 +130,18 @@ const App: React.FC = () => {
 			}));
 		}
 		setStartBreak(!startBreak);
+	};
+
+	const resetUserData = () => {
+		const data = {
+			workStartTime: 0,
+			workEndTime: 0,
+			breakStartTime: 0,
+			breakEndTime: 0,
+			totalWorkTime: 0,
+			totalBreakTime: 0,
+		};
+		setTodayData({ ...data });
 	};
 	return (
 		<>
