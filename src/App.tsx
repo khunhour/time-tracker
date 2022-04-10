@@ -173,6 +173,7 @@ const App: React.FC = () => {
 							startBreak={startBreak}
 							handleWorkButton={handleWorkButton}
 							handleBreakButton={handleBreakButton}
+							data={todayData}
 						/>
 					}
 				/>
