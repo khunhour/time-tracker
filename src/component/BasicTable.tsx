@@ -8,12 +8,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { formatDate } from "../utils/formatDate";
 import { formatHour } from "../utils/formatHour";
+import { Typography } from "@mui/material";
+import { formatDuration } from "../utils/formatDuration";
 
 interface Props {
 	data: any;
 }
 const BasicTable: React.FC<Props> = ({ data }) => {
-	console.log(data);
 	return (
 		<div
 			style={{
@@ -21,8 +22,12 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
+				flexDirection: "column",
 			}}
 		>
+			<Typography variant="h4" my={2}>
+				Today
+			</Typography>
 			<TableContainer
 				component={Paper}
 				elevation={4}
@@ -61,12 +66,9 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 									<TableCell>
 										{formatHour(ele.workEndTime)}
 									</TableCell>
-									<TableCell>
-										{formatHour(ele.totalBreakTime)}
-									</TableCell>
-									<TableCell>
-										{formatHour(ele.totalWorkTime)}
-									</TableCell>
+									{console.log(ele.totalWorkTime)}
+									<TableCell>{ele.totalBreakTime}</TableCell>
+									<TableCell>{ele.totalWorkTime}</TableCell>
 								</TableRow>
 							);
 						})}

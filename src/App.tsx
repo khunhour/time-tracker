@@ -7,6 +7,8 @@ import Dashboard from "./component/Dashboard";
 import History from "./component/History";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase-config";
+import { intervalToDuration } from "date-fns";
+import { formatDuration } from "./utils/formatDuration";
 
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
@@ -21,11 +23,12 @@ const App: React.FC = () => {
 		workEndTime: 0,
 		breakStartTime: 0,
 		breakEndTime: 0,
-		totalWorkTime: 0,
-		totalBreakTime: 0,
+		totalWorkTime: "",
+		totalBreakTime: "",
 	});
 	const navigate = useNavigate();
 
+	// monitor when user signin and signout
 	useEffect(() => {
 		const monitorAuthState = onAuthStateChanged(auth, (user) => {
 			// login sucessfully
@@ -44,10 +47,20 @@ const App: React.FC = () => {
 		};
 	}, [isLoggedIn]);
 
+	// when user end work send data to database
 	useEffect(() => {
 		if (todayData.workEndTime) {
 			firebase.addTodayData(todayData);
-			resetUserData();
+		}
+	});
+
+	useEffect(() => {
+		const endDay = new Date();
+		endDay.setUTCHours(23, 59, 59, 999);
+
+		let current = new Date();
+		if (current === endDay) {
+			// resetUserData();
 		}
 	});
 
@@ -102,11 +115,14 @@ const App: React.FC = () => {
 			}));
 		} else {
 			// ended work -> update state
-			let total = Date.now() - todayData.workStartTime;
+			let total = intervalToDuration({
+				start: todayData.workStartTime,
+				end: Date.now(),
+			});
 			setTodayData((prevData) => ({
 				...prevData,
 				workEndTime: Date.now(),
-				totalWorkTime: total,
+				totalWorkTime: formatDuration(total),
 			}));
 			// update database
 		}
@@ -122,11 +138,14 @@ const App: React.FC = () => {
 			}));
 		} else {
 			// ended break
-			let total = Date.now() - todayData.breakStartTime;
+			let total = intervalToDuration({
+				start: todayData.breakStartTime,
+				end: Date.now(),
+			});
 			setTodayData((prevData) => ({
 				...prevData,
 				breakEndTime: Date.now(),
-				totalBreakTime: total,
+				totalBreakTime: formatDuration(total),
 			}));
 		}
 		setStartBreak(!startBreak);
@@ -138,8 +157,8 @@ const App: React.FC = () => {
 			workEndTime: 0,
 			breakStartTime: 0,
 			breakEndTime: 0,
-			totalWorkTime: 0,
-			totalBreakTime: 0,
+			totalWorkTime: "",
+			totalBreakTime: "",
 		};
 		setTodayData({ ...data });
 	};
