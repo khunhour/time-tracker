@@ -4,7 +4,7 @@ import {
 	createUserWithEmailAndPassword,
 	signOut,
 } from "firebase/auth";
-import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 const signUp = async (email, password) => {
 	try {
@@ -57,11 +57,25 @@ const addTodayData = async (data) => {
 	}
 };
 
+const fetchHistory = async () => {
+	const user = auth.currentUser;
+	if (user) {
+		const userRef = doc(db, "users", user.uid);
+		const userSnap = await getDoc(userRef);
+		const data = userSnap.data();
+		if (!data) return;
+		return data.history;
+	} else {
+		console.log("No user");
+	}
+};
+
 const firebase = {
 	signUp,
 	loginEmailPassword,
 	logout,
 	addTodayData,
+	fetchHistory,
 };
 
 export default firebase;
