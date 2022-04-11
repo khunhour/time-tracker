@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 // datefns
 import { formatDate } from "../utils/formatDate";
 import { formatHour } from "../utils/formatHour";
+import { formatDuration } from "../utils/formatDuration";
 
 interface Props {
 	data: any;
@@ -69,10 +70,10 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 											{formatHour(ele.workEndTime)}
 										</TableCell>
 										<TableCell>
-											{ele.totalBreakTime}
+											{formatDuration(ele.totalBreakTime)}
 										</TableCell>
 										<TableCell>
-											{ele.totalWorkTime}
+											{formatDuration(ele.totalWorkTime)}
 										</TableCell>
 									</TableRow>
 								);
