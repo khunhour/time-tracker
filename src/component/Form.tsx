@@ -82,6 +82,13 @@ const Form: React.FC<Props> = ({
 							{text}
 						</Button>
 					</Box>
+					<div>
+						<Typography variant="h6">
+							Email and Password for testing:
+						</Typography>
+						<Typography>Email: testing123@test.com</Typography>
+						<Typography>Password: 123456</Typography>
+					</div>
 				</Box>
 			</Paper>
 		</Container>
