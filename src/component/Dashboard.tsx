@@ -1,5 +1,11 @@
-import { Typography } from "@mui/material";
 import React from "react";
+
+//material ui
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
+//components
 import BasicTable from "./BasicTable";
 import Buttons from "./Buttons";
 import Timer from "./Timer";
@@ -9,6 +15,7 @@ interface Props {
 	startBreak: boolean;
 	handleWorkButton: () => void;
 	handleBreakButton: () => void;
+	submitToDatabase: () => void;
 	data: any;
 	timer: number;
 }
@@ -18,6 +25,7 @@ const Dashboard: React.FC<Props> = ({
 	startBreak,
 	handleWorkButton,
 	handleBreakButton,
+	submitToDatabase,
 	data,
 	timer,
 }) => {
@@ -35,8 +43,16 @@ const Dashboard: React.FC<Props> = ({
 			<Typography variant="h4" my={2} textAlign="center">
 				Today's Work
 			</Typography>
-
 			<BasicTable data={arrayData} />
+			<Box mt={3} sx={{ display: "flex", justifyContent: "center" }}>
+				<Button
+					variant="contained"
+					size="large"
+					onClick={submitToDatabase}
+				>
+					Submit Work
+				</Button>
+			</Box>
 		</>
 	);
 };

@@ -1,7 +1,13 @@
 import React from "react";
+
+//material ui
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+
+// custom hooks
 import { useDate } from "../custom hooks/useDate";
+
+// datefns
 import { formatDuration } from "../utils/formatDuration";
 
 interface Props {
