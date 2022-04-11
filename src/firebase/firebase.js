@@ -4,15 +4,7 @@ import {
 	createUserWithEmailAndPassword,
 	signOut,
 } from "firebase/auth";
-import {
-	arrayUnion,
-	doc,
-	getDoc,
-	orderBy,
-	query,
-	setDoc,
-	updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 const signUp = async (email, password) => {
 	try {
@@ -65,15 +57,13 @@ const addTodayData = async (data) => {
 	}
 };
 
+// fetch work histiry from database
 const fetchHistory = async () => {
 	const user = auth.currentUser;
 	if (user) {
 		const userRef = doc(db, "users", user.uid);
 		const userSnap = await getDoc(userRef);
 		const data = userSnap.data();
-
-		// const data = query(userRef, orderBy("startWorkTime"));
-
 		if (!data) return;
 		return data.history;
 	} else {

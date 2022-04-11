@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+
+//component
 import Navbar from "./component/Navbar";
 import Form from "./component/Form";
 import firebase from "./firebase/firebase";
-import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./component/Dashboard";
 import History from "./component/History";
+
+// firebase
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase-config";
+
+//datefns library
 import { intervalToDuration } from "date-fns";
 import { formatDuration } from "./utils/formatDuration";
 
@@ -81,6 +87,7 @@ const App: React.FC = () => {
 		}
 	});
 
+	// onchange event listener
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.id === "email") {
 			setEmail(e.target.value);
@@ -89,6 +96,7 @@ const App: React.FC = () => {
 		}
 	};
 
+	// when user login or sign up
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (e.currentTarget.id === "login") {
@@ -114,10 +122,13 @@ const App: React.FC = () => {
 		setPassword("");
 	};
 
+	// when a user log out
 	const handleLogout = () => {
 		firebase.logout();
 		setIsLoggedIn(false);
 	};
+
+	// change form type from login to signup
 	const handleChangeFormType = (e: React.MouseEvent<HTMLButtonElement>) => {
 		navigate("/");
 		setFormType(e.currentTarget.value);
@@ -125,7 +136,7 @@ const App: React.FC = () => {
 
 	const handleWorkButton = async () => {
 		if (!startWork) {
-			// started work
+			// started work -> update state
 			setTodayData((prevData) => ({
 				...prevData,
 				workStartTime: Date.now(),
@@ -141,11 +152,11 @@ const App: React.FC = () => {
 				workEndTime: Date.now(),
 				totalWorkTime: formatDuration(total),
 			}));
-			// update database
 		}
 		setStartWork(!startWork);
 	};
 
+	// set data state when break buttons is pressed
 	const handleBreakButton = () => {
 		if (!startBreak) {
 			// started break -> update state
@@ -154,7 +165,7 @@ const App: React.FC = () => {
 				breakStartTime: Date.now(),
 			}));
 		} else {
-			// ended break
+			// ended break -> update state
 			let total = intervalToDuration({
 				start: todayData.breakStartTime,
 				end: Date.now(),
@@ -187,7 +198,6 @@ const App: React.FC = () => {
 				handleChangeFormType={handleChangeFormType}
 			/>
 			<Routes>
-				{/* <Today /> */}
 				<Route
 					path="/"
 					element={
