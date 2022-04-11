@@ -32,7 +32,7 @@ const App: React.FC = () => {
 	});
 	const navigate = useNavigate();
 
-	//
+	// set timer to increment every second
 	useEffect(() => {
 		let workTimer: any;
 		if (startWork) {
@@ -64,40 +64,25 @@ const App: React.FC = () => {
 		};
 	}, [isLoggedIn]);
 
-	// fetch history when logged in and when ended work
+	// fetch history when logged in
 	useEffect(() => {
-		if (isLoggedIn || startWork) {
+		if (isLoggedIn) {
 			const updateHistory = async () => {
 				const data = await firebase.fetchHistory();
 				setHistory([...data]);
 			};
 			updateHistory();
 		}
-	}, [isLoggedIn, startWork]);
+	}, [isLoggedIn]);
 
-	// when user end work send data to database
-	useEffect(() => {
-		const updateHistory = async () => {
-			const data = await firebase.fetchHistory();
-			setHistory([...data]);
-		};
-
-		if (todayData.workEndTime) {
-			firebase.addTodayData(todayData);
-			updateHistory();
-			resetUserData();
-		}
-	});
-
-	useEffect(() => {
-		const endDay = new Date();
-		endDay.setUTCHours(23, 59, 59, 999);
-
-		let current = new Date();
-		if (current === endDay) {
-			resetUserData();
-		}
-	});
+	// submit work data to database
+	const submitToDatabase = async () => {
+		firebase.addTodayData(todayData);
+		const data = await firebase.fetchHistory();
+		setHistory([...data]);
+		resetUserData();
+		setTimer(0);
+	};
 
 	// onchange event listener
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -225,6 +210,7 @@ const App: React.FC = () => {
 							startBreak={startBreak}
 							handleWorkButton={handleWorkButton}
 							handleBreakButton={handleBreakButton}
+							submitToDatabase={submitToDatabase}
 							data={todayData}
 							timer={timer}
 						/>
