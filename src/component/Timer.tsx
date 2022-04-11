@@ -14,7 +14,7 @@ const Timer: React.FC<Props> = ({ timer }) => {
 			<Typography variant="h6" textAlign="center">
 				{date.toLocaleString()}
 			</Typography>
-			<Typography variant="h1" textAlign="center" mt={3}>
+			<Typography variant="h2" textAlign="center" mt={3}>
 				{formatDuration(timer)}
 			</Typography>
 		</Box>

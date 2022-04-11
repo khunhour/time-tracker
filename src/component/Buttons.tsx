@@ -17,7 +17,7 @@ const Buttons: React.FC<Props> = ({
 	return (
 		<>
 			<Box
-				mt={9}
+				mt={3}
 				mb={2}
 				sx={{
 					display: "flex",
