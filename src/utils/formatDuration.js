@@ -1,11 +1,8 @@
-export const formatDuration = (duration) => {
-	// format 1 to 01
-	for (const key in duration) {
-		if (duration[key].toString().length === 1) {
-			let prop = duration[key].toString();
-			duration[key] = "0" + prop;
-		}
-	}
-	const { hours, minutes, seconds } = duration;
-	return `${hours}:${minutes}:${seconds}`;
+import { addSeconds, format } from "date-fns";
+
+export const formatDuration = (seconds) => {
+	//offset by 9 hours
+	let offsettedTimer = seconds - 32400;
+	const date = addSeconds(new Date(0), offsettedTimer);
+	return format(date, "HH:mm:ss");
 };
