@@ -6,6 +6,7 @@
 -   出勤時刻、退勤時刻、休憩開始時刻、休憩終了時刻を追跡する
 -   総作業時間と総休憩時間も計算される
 -   データベースに保存されている作業履歴の情報も提供する
+-   アプリサイト: https://time-tracker-ec3fc.web.app/
 
 #### English
 
@@ -13,6 +14,7 @@
 -   It tracks when you start to work, take breaks, end breaks, and leave your work.
 -   It also calculate your total work time and total break time
 -   It also provide a information of your work history stored in the database
+-   App Site: https://time-tracker-ec3fc.web.app/
 
 # How To use - 使い方
 
@@ -47,6 +49,6 @@
 -   TypeScript
 -   JavaScript
 -   React
--   [Firebase](https://firebase.google.com/) (Firestore database and Authentication)
+-   [Firebase](https://firebase.google.com/) (Firestore database, Authentication, Hosting)
 -   Material UI
 -   HTML/CSS
