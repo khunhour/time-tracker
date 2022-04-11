@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import { formatDate } from "../utils/formatDate";
 import { formatHour } from "../utils/formatHour";
 import { Typography } from "@mui/material";
-import { formatDuration } from "../utils/formatDuration";
 
 interface Props {
 	data: any;
@@ -26,7 +25,7 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 			}}
 		>
 			<Typography variant="h4" my={2}>
-				Today
+				Work History
 			</Typography>
 			<TableContainer
 				component={Paper}
@@ -40,38 +39,45 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 						<TableRow>
 							<TableCell>Date</TableCell>
 							<TableCell>Work Start</TableCell>
-							<TableCell>Work End</TableCell>
 							<TableCell>Break Start</TableCell>
 							<TableCell>Break End</TableCell>
-							<TableCell>Total Work</TableCell>
+							<TableCell>Work End</TableCell>
 							<TableCell>Total Break</TableCell>
+							<TableCell>Total Work</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{data.map((ele: any) => {
-							return (
-								<TableRow>
-									<TableCell>
-										{formatDate(ele.workStartTime)}
-									</TableCell>
-									<TableCell>
-										{formatHour(ele.workStartTime)}
-									</TableCell>
-									<TableCell>
-										{formatHour(ele.breakStartTime)}
-									</TableCell>
-									<TableCell>
-										{formatHour(ele.breakEndTime)}
-									</TableCell>
-									<TableCell>
-										{formatHour(ele.workEndTime)}
-									</TableCell>
-									{console.log(ele.totalWorkTime)}
-									<TableCell>{ele.totalBreakTime}</TableCell>
-									<TableCell>{ele.totalWorkTime}</TableCell>
-								</TableRow>
-							);
-						})}
+						{data
+							.slice(0)
+							.reverse()
+							.map((ele: any) => {
+								return (
+									<TableRow>
+										<TableCell>
+											{formatDate(ele.workStartTime)}
+										</TableCell>
+										<TableCell>
+											{formatHour(ele.workStartTime)}
+										</TableCell>
+										<TableCell>
+											{formatHour(ele.breakStartTime)}
+										</TableCell>
+										<TableCell>
+											{formatHour(ele.breakEndTime)}
+										</TableCell>
+										<TableCell>
+											{formatHour(ele.workEndTime)}
+										</TableCell>
+										{console.log(ele.totalWorkTime)}
+										<TableCell>
+											{ele.totalBreakTime}
+										</TableCell>
+										<TableCell>
+											{ele.totalWorkTime}
+										</TableCell>
+									</TableRow>
+								);
+							})}
 					</TableBody>
 				</Table>
 			</TableContainer>
