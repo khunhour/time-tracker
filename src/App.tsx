@@ -18,6 +18,7 @@ const App: React.FC = () => {
 	const [error, setError] = useState<string>("");
 	const [formType, setFormType] = useState<string>("login");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+	const [history, setHistory] = useState<any>([]);
 	const [todayData, setTodayData] = useState({
 		workStartTime: 0,
 		workEndTime: 0,
@@ -47,10 +48,26 @@ const App: React.FC = () => {
 		};
 	}, [isLoggedIn]);
 
+	// fetch history on mount
+	useEffect(() => {
+		const updateHistory = async () => {
+			const data = await firebase.fetchHistory();
+			setHistory([...data]);
+		};
+		updateHistory();
+	}, []);
+
 	// when user end work send data to database
 	useEffect(() => {
+		const updateHistory = async () => {
+			const data = await firebase.fetchHistory();
+			setHistory([...data]);
+		};
+
 		if (todayData.workEndTime) {
 			firebase.addTodayData(todayData);
+			updateHistory();
+			resetUserData();
 		}
 	});
 
@@ -60,7 +77,7 @@ const App: React.FC = () => {
 
 		let current = new Date();
 		if (current === endDay) {
-			// resetUserData();
+			resetUserData();
 		}
 	});
 
@@ -196,7 +213,7 @@ const App: React.FC = () => {
 						/>
 					}
 				/>
-				<Route path="/history" element={<History />} />
+				<Route path="/history" element={<History data={history} />} />
 			</Routes>
 		</>
 	);
