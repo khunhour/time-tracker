@@ -19,7 +19,7 @@
 
 #### 日本語
 
-- `Sign Up` ボタンを押してサインアップする
+- `Sign Up` ボタンを押してサインアップする (メールとパスワードを使用する)
 - または、`Log In` ボタンを押してログインする（すでにアカウントをお持ちの場合、または、既存のテストアカウントを使用できる）
 - `Dashboard` タブに移動する
 - `Start Work` ボタンを押して作業を開始する
@@ -31,7 +31,7 @@
 
 #### English
 
-- Press the `sign Up` button to sign up
+- Press the `sign Up` button to sign up (using email and password)
 - Or press the `Log in` button to log in (if you already have an account or you can use the existing test account)
 - navigate to the `Dashboard` tab
 - Press `Start Work` button to begin to work
