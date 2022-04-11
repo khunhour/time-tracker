@@ -24,9 +24,6 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 				flexDirection: "column",
 			}}
 		>
-			<Typography variant="h4" my={2}>
-				Work History
-			</Typography>
 			<TableContainer
 				component={Paper}
 				elevation={4}

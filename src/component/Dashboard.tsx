@@ -1,7 +1,7 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import BasicTable from "./BasicTable";
 import Buttons from "./Buttons";
-import Today from "./Today";
 
 interface Props {
 	startWork: boolean;
@@ -28,6 +28,9 @@ const Dashboard: React.FC<Props> = ({
 				handleWorkButton={handleWorkButton}
 				handleBreakButton={handleBreakButton}
 			/>
+			<Typography variant="h4" my={2} textAlign="center">
+				Today's Work
+			</Typography>
 			<BasicTable data={arrayData} />
 		</>
 	);
