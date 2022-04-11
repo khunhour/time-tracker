@@ -68,7 +68,6 @@ const BasicTable: React.FC<Props> = ({ data }) => {
 										<TableCell>
 											{formatHour(ele.workEndTime)}
 										</TableCell>
-										{console.log(ele.totalWorkTime)}
 										<TableCell>
 											{ele.totalBreakTime}
 										</TableCell>
