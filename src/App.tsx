@@ -12,10 +12,6 @@ import History from "./component/History";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase-config";
 
-//datefns library
-import { intervalToDuration } from "date-fns";
-import { formatDuration } from "./utils/formatDuration";
-
 const App: React.FC = () => {
 	const [startWork, setStartWork] = useState<boolean>(false);
 	const [startBreak, setStartBreak] = useState<boolean>(false);
@@ -25,15 +21,29 @@ const App: React.FC = () => {
 	const [formType, setFormType] = useState<string>("login");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 	const [history, setHistory] = useState<any>([]);
+	const [timer, setTimer] = useState<number>(0);
 	const [todayData, setTodayData] = useState({
 		workStartTime: 0,
 		workEndTime: 0,
 		breakStartTime: 0,
 		breakEndTime: 0,
-		totalWorkTime: "",
-		totalBreakTime: "",
+		totalWorkTime: 0,
+		totalBreakTime: 0,
 	});
 	const navigate = useNavigate();
+
+	//
+	useEffect(() => {
+		let workTimer: any;
+		if (startWork) {
+			workTimer = setInterval(() => {
+				setTimer((prevState: any) => prevState + 1);
+			}, 1000);
+		}
+		return () => {
+			clearInterval(workTimer);
+		};
+	}, [startWork]);
 
 	// monitor when user signin and signout
 	useEffect(() => {
@@ -54,14 +64,16 @@ const App: React.FC = () => {
 		};
 	}, [isLoggedIn]);
 
-	// fetch history on mount
+	// fetch history when logged in and when ended work
 	useEffect(() => {
-		const updateHistory = async () => {
-			const data = await firebase.fetchHistory();
-			setHistory([...data]);
-		};
-		updateHistory();
-	}, []);
+		if (isLoggedIn || startWork) {
+			const updateHistory = async () => {
+				const data = await firebase.fetchHistory();
+				setHistory([...data]);
+			};
+			updateHistory();
+		}
+	}, [isLoggedIn, startWork]);
 
 	// when user end work send data to database
 	useEffect(() => {
@@ -143,14 +155,11 @@ const App: React.FC = () => {
 			}));
 		} else {
 			// ended work -> update state
-			let total = intervalToDuration({
-				start: todayData.workStartTime,
-				end: Date.now(),
-			});
+			let total = (Date.now() - todayData.workStartTime) / 1000;
 			setTodayData((prevData) => ({
 				...prevData,
 				workEndTime: Date.now(),
-				totalWorkTime: formatDuration(total),
+				totalWorkTime: total,
 			}));
 		}
 		setStartWork(!startWork);
@@ -166,14 +175,11 @@ const App: React.FC = () => {
 			}));
 		} else {
 			// ended break -> update state
-			let total = intervalToDuration({
-				start: todayData.breakStartTime,
-				end: Date.now(),
-			});
+			let total = (Date.now() - todayData.breakStartTime) / 1000;
 			setTodayData((prevData) => ({
 				...prevData,
 				breakEndTime: Date.now(),
-				totalBreakTime: formatDuration(total),
+				totalBreakTime: total,
 			}));
 		}
 		setStartBreak(!startBreak);
@@ -185,8 +191,8 @@ const App: React.FC = () => {
 			workEndTime: 0,
 			breakStartTime: 0,
 			breakEndTime: 0,
-			totalWorkTime: "",
-			totalBreakTime: "",
+			totalWorkTime: 0,
+			totalBreakTime: 0,
 		};
 		setTodayData({ ...data });
 	};
@@ -220,6 +226,7 @@ const App: React.FC = () => {
 							handleWorkButton={handleWorkButton}
 							handleBreakButton={handleBreakButton}
 							data={todayData}
+							timer={timer}
 						/>
 					}
 				/>
